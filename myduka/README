@@ -1,0 +1,89 @@
+Create a new project called MyDuka with the following files: -main.py -database.py
+
+Open up a new terminal and run the following commands:
+
+pip install flask
+pip install psycopg2-binary
+TABLES -> Products , Sales , Stock, Users Open sql shell create a new database create database myduka; connect to myduka d. atabase \c myduka
+
+run the following commands
+
+products table CREATE TABLE products ( id SERIAL PRIMARY KEY, name VARCHAR(100) NOT NULL, buying_price NUMERIC(20, 2) NOT NULL CHECK (buying_price >= 0), selling_price NUMERIC(20, 2) NOT NULL CHECK (selling_price >= 0) );
+
+stock table CREATE TABLE stock ( id SERIAL PRIMARY KEY, pid INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE, stock_quantity INTEGER NOT NULL CHECK (stock_quantity >= 0), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP );
+
+sales table CREATE TABLE sales ( id SERIAL PRIMARY KEY, pid INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE, quantity INTEGER NOT NULL CHECK (quantity > 0), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP );
+
+users CREATE TABLE users ( id SERIAL PRIMARY KEY, full_name VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL UNIQUE, phone_number VARCHAR(100) NOT NULL, password VARCHAR(255) NOT NULL );
+
+pip -> pip installs packages
+
+Psycopg2 -> A database driver or adapter used to connect Python to a Postgres database -> To estabish this connection , we use a function called psycopg2.connect() -> which takes some parameters important for establishing a db connection
+
+psycopg2.connect() - a function used to establish a new connection to a postgres db -> It takes some arguments: 1.host - on what server is my database located? - host = 'localhost' localhost : my own device -> database is locally hosted on my device
+
+2.port -> where in my device is the Postgres service running -> Postgres runs on port 5432 by default port = '5432' 3.user - username attached to a Postgres user user = 'postgres' 4.password - password attached to a Postgres user for login password = '1234' 5.dbname - the database you intend to connect to dbname = 'myduka'
+
+127.0.0.1 build an app -> deploy it on cloud to make it available online -> an ip address is assigned to your application
+
+179.181.200.120 domain name -> a human friendly name attached to an ip address https://meet.google.com/dsh-idtb-oqb
+
+cur - an object / tool for performing database operations db operations - select , insert , update , delete
+
+C - create - insert R - read. - select U - update. - update D - delete - delete
+
+cur.execute() - a function used to execute sql queries cur.fetchall() - a function used to retrieve data from Postgres to Python
+
+insert into products(name, buying_price,selling_price)values('bread',50,60); insert into products(name, buying_price,selling_price)values('milk',50,60);
+
+our data format - a list of tuples
+
+Task
+
+insert two record of sales in sql shell and use psycopg2 to display them in your terminal
+
+brush up on the following concepts: -> SQL ( sql queries , joins , aggregate functions , group by) -> Python ( data types, lists and tuples , for loops, if statements & functions) w3schools & geeks for geeks
+
+Inserting data using psycopg2 insert into table_name(columns....)values(...) conn.commit() - a function meant to commit / save db changes
+
+Optimize our queries in psycopg2 using functions -> Functions : block of reusable code meant to perform a specifc task
+
+why use functions? 1.Reusability - use parameters parameters & arguments 2.Modularity - breaking code into smaller manageable pieces 3.Better readability 4.Code Organization 5.Scalability 6.Better debugging
+
+transactions - more than one query executing as a single unit of work
+
+sql injection select email,password from users where password = 1 OR 1 == 1 1 OR 1 == 1
+
+Task 1.Using functions write code to: -> get_stock() -> insert sales() -> insert_stock()
+
+2.Write sql queries that fetch the following data: -> sales_per_day => sales , date sales = revenue -> profit_per_day -> sales_per_product -> profit_per_product
+
+15000 * 3 = 45000 (quantity , selling_price , date)
+
+sales per day select date(sales.created_at) as date, sum(sales.quantity * products.selling_price) as total_sales from sales join products on products.id = sales.pid group by date;
+
+profit per day select date(sales.created_at) as date, sum(sales.quantity *( products.selling_price - products.buying_price)) as total_sales from sales join products on products.id = sales.pid group by date;
+
+sales per product select products.name as p_name , sum(sales.quantity * products.selling_price) as total_sales from products join sales on sales.pid = products.id group by p_name;
+
+profit per product select products.name as p_name , sum(sales.quantity *( products.selling_price - products.buying_price)) as total_sales from products join sales on sales.pid = products.id group by p_name;
+
+Multiline strings ->Enable you to have a string that spans more than one line -> it uses tripple opening & closing brackets
+
+OBJECT ORIENTED PROGRAMMING - OOP -> Broadly we have 2 categories of data types: 1.Inbuilt data types -> data types that come with the programming language -> str, int, float ,bool , lists , tuples... 2.Custom data types -> data types created by the programmer -> this is useful in representing data outside the predefined data types -> This is enabled by OOP (use of classes and objects)
+
+OOP - a programming paradigm where we build programs around classes and objects Class - a template / blueprint for creating objects Object - an instance of a class
+
+Any class has the following 3 things: 1.Identity - every class has a unique name to identify it e.g class Laptop, class Dog 2.State : variables / data / attributes contained in a class =>variables : what does a class have? 3.Behaviour : what can a class do? -> enabled by functions functions inside a class are called methods
+
+class Laptop: identity : Laptop state: ram , processors ,e.t.c behaviour : power on, power off, code, create files
+
+generate identity,state and behaviour for the following classes: 1.Horse 2.Student 3.Car
+
+class Student: identity : Student state: name , student_no , course , age behaviour : learn, sleep, eat, do_exams
+
+class Horse : identity : Horse state : name, age , breed , can_race behaviour: run , race, sleep, eat
+
+Method - any function inside a class Constructor - a special method that is automatically called when creating an object. It is used to initialize objects with data ->def init()
+
+dunder methods - double underscore methods
