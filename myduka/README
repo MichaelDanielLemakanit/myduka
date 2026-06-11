@@ -138,4 +138,10 @@ Myduka -> static : contains all static files e.g. css , images , videos , favico
 
 {% block title %} defines the unique title of each page {% endblock%}
 
-{% block content %} defines the unique content of each page {% endblock%}
+{% block content %} defines the unique content of each page {% endblock %}
+
+displaying data in flask -> to display data from Python in html we use Jinja: Jinja - is a templating engine integrated with Flask to render dynamic html pages -> It is simply syntax -> How to use Jinja Syntax: 1.When using Jinja to display variables / data ===> {{}} 2.When using control structures ===> {% %}
+
+Control Structures - building blocks of a programming langauge 1.Sequence - a program executes top to bottom left to right 2.Iteration - looping 3.Selection - decision making (conditional statements)
+
+Task -> Display sales and stock data using datatables

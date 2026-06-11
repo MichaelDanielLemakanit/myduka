@@ -1,11 +1,13 @@
 from flask import Flask,  render_template
+from database import get_products
 
 # Create a Flask application instance
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    number = 1000
+    return render_template('index.html', x=number)
 
 @app.route('/dashboard')
 def dashboard():
@@ -17,7 +19,9 @@ def login():
 
 @app.route('/products')
 def products():
-    return render_template('products.html')
+    products_data = get_products()  # Fetch products from the database
+    return render_template('products.html', products_data = products_data)  # Pass products data to the template
+
 
 @app.route('/register')
 def register():

@@ -38,7 +38,7 @@
 
 import psycopg2
 #establishing a connection to a postgres db
-conn=psycopg2.connect(host='localhost',port=5432,user='postgres',password='9467',dbname='myduka')
+conn=psycopg2.connect(host='localhost',port=5432,user='postgres',password='2201',dbname='myduka')
  #cursor object
 cur=conn.cursor()
 def get_products():
