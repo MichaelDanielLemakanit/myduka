@@ -1,1 +1,40 @@
 {% extends "base.html" %}
+{% block title %} sales {% endblock %}
+
+{% block content %}
+<div>
+    <p>
+        this is sales page
+    </p>
+    <div>
+        <table id="example" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>sales</th>
+                    <th>id</th>
+                    <th>Quantity</th>
+                    <th>Date</th>
+                    <th>Product name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in sales_data %}
+                <tr>
+                    <td>{{ i[1] }}</td>
+                    <td>{{ i[0] }}</td>
+                    <td>{{ i[2] }}</td>
+                    <td>{{ i[3] }}</td>
+                    <td>{{ i[4] }}</td>
+                    <td>
+                        <button class="btn btn-primary">Edit</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
