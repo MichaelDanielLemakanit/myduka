@@ -61,8 +61,9 @@ def insert_products2(values):
 
 product1=('tissue',35,50)
 product2=('valon',120,150)
-# insert_products2(product1)
-# insert_products2(product2)
+
+insert_products2(product1)
+insert_products2(product2)
 products_data=insert_products2
 print(products_data)
 
@@ -94,9 +95,9 @@ sales2=(3,12)
 sales3=(5,20)
 
 
-# insert_sales(sales1)
-# insert_sales(sales2)
-# insert_sales(sales3)
+insert_sales(sales1)
+insert_sales(sales2)
+insert_sales(sales3)
 
 
 sales_data=get_sales()
@@ -111,9 +112,9 @@ stock1=(2,16)
 stock2=(5,21)
 stock3=(7,35)
 
-# insert_stock(stock1)
-# insert_stock(stock2)
-# insert_stock(stock3)
+insert_stock(stock1)
+insert_stock(stock2)
+insert_stock(stock3)
 
 stocks_data = get_stocks()
 print(stocks_data)
