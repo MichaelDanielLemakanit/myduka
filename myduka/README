@@ -212,3 +212,29 @@ flash notifications authentication
 Task Have products and stock forms inside modals 
 Test making sales with checking available stock
 
+Flash messaging -> One time notifications to the user based on some action e.g. action -> adding a product notificatins -> added product successfully
+
+-> we use flash() -> a function that takes two arguments: 1.Message -> specific message to be displayed 2.Message category - categories of messages based on type
+
+Message categories 1.Successful responses /messages -> green 2.Error / danger messages -> red 3.Warning messages -> yellow 4.Informational messages -> blue
+
+Note -> Flash messages are stored in a session cookie (in the browser) -> Any data stored in cookie needs a secret key for encryption
+
+User Registration and Authentication
+
+1.A user is provided with a form to fill / register 2.A user fills the form with user details and submits it 3.Form is submitted to register route for processing 4.Request object extracts form details using request.form method 5.Check whether the user exists - using email if user exists : -> alert them & redirect them to login if user doesnt exist -Hash the user's password for protection -Insert the new user into users table
+
+hashing -> converting data from plain text to a complex format that cant be easily deciphered
+
+1234 ---> n99dnuc99jje99djh99ejd99dd abcde -> 99en8ehdxjjdskkkdkkdkkdkkdkd -> Hashing always produces the same output
+
+rainbow table attacks salting -> add random text to plain passwords so that hashes become more complex
+
+1234 - n99dnuc99jje99djh99ejd99dd 1234xiikdnjicicj -> 99enjucx99djuc8ichjjc89injc99ejjd9idjdjkdoodiodoidji
+
+plain text password + salt => hash it with an encryption algorithm (bcrypt)
+
+pip install flask_bcrypt
+
+Hashing history
+
