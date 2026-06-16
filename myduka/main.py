@@ -1,8 +1,11 @@
-from flask import Flask, render_template,request,redirect,url_for
-from database import get_products,get_sales,get_stock,insert_products,check_available_stock,insert_sales
+from flask import Flask, render_template,request,redirect,url_for, flash
+from database import get_products,get_sales,get_stock,insert_products,check_available_stock,insert_sales,check_user_exists,insert_user
+from flask_bcrypt import Bcrypt
 
 #Flask Instance
 app = Flask(__name__)
+app.secret_key = 'my_secret_key'  # Required for flashing messages definijg a secret key for the application to use flash messages
+bcrypt = Bcrypt(app)
 
 #index route
 @app.route('/')
@@ -26,7 +29,7 @@ def add_products():
 
         new_product = (product_name,buying_price,selling_price)
         insert_products(new_product)
-        print("product added successfully") 
+        flash("product added successfully", 'success') 
 
     return redirect(url_for('products'))
 
@@ -51,11 +54,11 @@ def make_sale():
         available_stock = check_available_stock(pid)
 
         if available_stock < float(quantity):
-            print("Insufficient stock,add more")
+            flash("Insufficient stock,add more", 'danger')
             return redirect(url_for('sales'))
 
         insert_sales(new_sale)
-        print("Sale added successfully")
+        flash("Sale added successfully", 'success')
     return redirect(url_for('sales'))
 
 
@@ -74,13 +77,36 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route('/register')
+@app.route('/register', methods=['GET','POST'])
 def register():
+    if request.method == 'POST':
+        full_name = request.form['full_name']
+        email = request.form['email']
+        phone_number = request.form['phone_number']
+        password = request.form['password']
+
+        existing_user = check_user_exists(email)
+        if not existing_user:
+            heshed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+            new_user = (full_name,email,phone_number,heshed_password)
+            insert_user(new_user)
+            flash("Registration successful, you can now login", 'success')
+            return redirect(url_for('login'))
+        else:
+            flash("User with this email already exists, please login", 'danger')
+            return redirect(url_for('login'))
+
+
+
     return render_template('register.html')
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET','POST'])
 def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
     return render_template('login.html')
 
 
