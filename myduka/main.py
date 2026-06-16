@@ -106,6 +106,16 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+        user = check_user_exists(email)
+
+        if user:
+            if bcrypt.check_password_hash(user[4], password):
+                flash("Login successful", 'success')
+                return redirect(url_for('dashboard'))
+            else:
+                flash("Invalid email or password", 'danger')
+        else:
+            flash("Invalid email or password", 'danger')
 
     return render_template('login.html')
 
