@@ -122,6 +122,24 @@ Examples 1.Python -> Flask, FastAPI , Django 2.Java -> Spring 3.C# -> .NET 4.Jav
 
 FLASK -> A Python framework used to build web applications
 
+
+# 1. Create a fresh virtual environment named 'venv'
+python -m venv venv
+
+# 2. Activate the environment (On Windows)
+.\venv\Scripts\Activate.ps1
+
+# 3. Install Flask inside this isolated sandbox
+pip install flask
+
+# 4. Start your development server
+flask run
+
+syntax that help not to kiil you server bt to reload 
+set FLASK_DEBUG=1
+
+flask run
+
 Routing in FLASK -> A mechanism that maps / connects URLS to Python functions. It is a system for resource navigation
 
 To execute routing in Flask we use a decorator function called @app.route() decorator function - a function that modifies or determines the behaviour of another function .In Python decorator functions have the '@' prefix @app.route() can take some parameters: 1.Rule / Path -> the specific resource to be accessed e..g /login /register /products 2.Method
@@ -145,3 +163,50 @@ displaying data in flask -> to display data from Python in html we use Jinja: Ji
 Control Structures - building blocks of a programming langauge 1.Sequence - a program executes top to bottom left to right 2.Iteration - looping 3.Selection - decision making (conditional statements)
 
 Task -> Display sales and stock data using datatables
+
+Posting data in Flask Posting : move data from the client side to the server side
+
+Posting data workflow 1.A user is provided with a form to fill 2.User fills and submits the form 3.The form is submitted to a route in Flask for processing 4.Form data is then extracted using the request object Note -> data from the form is sent in key-value pair format *request object has 2 methods: => request.form : used to extract form data using its key => request.method : used by the server to determine what method has been used
+
+5.Process data and store it 6.Redirect the user redirect - take the user to another resource -> use the redirect() function which takes url_for() as an argument -> redirect(url_for(' name of the view function' ))
+
+form checklist 1.action attribute -> in what route is the form to be submitted e.g /add_products 2.method attribute method - determines what a server does with data / a resource 3.name attribute -> the key used by the server to extract form data 4.input type 5.button of type submit
+
+methods 1.GET - getting / retrieving data from a server e.g displaying products in an interface 2.POST -> sending data to a server from a client e.g. registering a user ,login , add products, making sales , sending tweets 3.PUT - update an existing resource / data e.g. changing product name , updating password 4.DELETE - getting rid of a resource e.g. deleting products, profile
+
+Note - data from the form is of type string
+
+p_name:"bread" b_price:55 s_price:60
+
+task =>Post stock and sales data using a form and two routes: /add_sales , /add_stock
+making purchases => add products -> name,bp,sp => add stock on existing products => making sales => reduce
+
+bread, 60,65 100 80 20 - remaining stock
+
+80
+
+myduka=# select * from stock; id | pid | stock_quantity | created_at
+----+-----+----------------+---------------------------- 1 | 3 | 55| 2026-04-10 15:06:58.088418 1 | 3 | 50| 2026-04-10 15:06:58.088418
+
+total stock = 105
+
+[(105,)]
+
+myduka=# select * from sales; id | pid | quantity | created_at
+----+-----+----------+---------------------------- 3 | 3 | 50 | 2026-04-10 15:06:40.615398 4 | 3 | 20 | 2026-04-13 20:21:39.976895
+
+total sold = 70
+
+remaining = total stock per product - total sold per product
+
+Bread , 60, 65 -> add no stock (none) -> 0 -> make no sales (none) -> 0
+
+Bread , 60, 65 -> add 100 of stock on it (100) -> make no sales (none) - 0
+
+zero and none
+
+zero => 1000 - 1000
+
+flash notifications authentication
+
+Task Have products and stock forms inside modals Test making sales with checking available stock
