@@ -113,7 +113,7 @@ def check_available_stock(pid):
 def check_user_exists(email):
     cur.execute("select * from users where email = %s",(email,))
     user = cur.fetchone()
-    return user is not None
+    return user 
 
 def insert_user(user_details):
     cur.execute("insert into users(full_name,email,phone_number,password) values(%s,%s,%s,%s)", user_details)
