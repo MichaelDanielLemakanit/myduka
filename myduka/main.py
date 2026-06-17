@@ -1,6 +1,7 @@
-from flask import Flask, render_template,request,redirect,url_for, flash
+from flask import Flask, render_template,request,redirect,url_for, flash, session
 from database import get_products,get_sales,get_stock,insert_products,check_available_stock,insert_sales,check_user_exists,insert_user
 from flask_bcrypt import Bcrypt
+from functools import wraps
 
 #Flask Instance
 app = Flask(__name__)
@@ -12,9 +13,19 @@ bcrypt = Bcrypt(app)
 def home():
     return render_template("index.html")
 
+def login_required(f):
+    @wraps(f)
+    def protected(*args, **kwargs):
+        if 'email' not in session:
+            flash("Please login to access this page", 'danger')
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return protected
+
 
 #products route
 @app.route("/products")
+@login_required
 def products():
     products_data = get_products()
     return render_template('products.html',products_data=products_data)
@@ -37,6 +48,7 @@ def add_products():
 
 #sales route
 @app.route('/sales')
+@login_required
 def sales():
     sales_data = get_sales()
     products = get_products()
@@ -66,6 +78,7 @@ def make_sale():
 
 #stock route
 @app.route('/stock')
+@login_required
 def stock():
     stock_data = get_stock()
     products = get_products()
@@ -73,8 +86,9 @@ def stock():
 
 
 @app.route('/dashboard')
+@login_required
 def dashboard():
-    return render_template('dashboard.html')
+   return render_template('dashboard.html')
 
 
 @app.route('/register', methods=['GET','POST'])
@@ -106,17 +120,19 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        user = check_user_exists(email)
 
-        if user:
-            if bcrypt.check_password_hash(user[4], password):
+        registered_user = check_user_exists(email)
+
+        if not registered_user:
+            flash("User not found, please register", 'danger')
+            return redirect(url_for('register'))
+        else:
+            if bcrypt.check_password_hash(registered_user[-1], password):
                 flash("Login successful", 'success')
                 return redirect(url_for('dashboard'))
             else:
                 flash("Invalid email or password", 'danger')
-        else:
-            flash("Invalid email or password", 'danger')
-            return redirect(url_for('login'))
+                return redirect(url_for('login'))
 
     return render_template('login.html')
 

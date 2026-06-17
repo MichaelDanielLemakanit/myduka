@@ -118,3 +118,7 @@ def check_user_exists(email):
 def insert_user(user_details):
     cur.execute("insert into users(full_name,email,phone_number,password) values(%s,%s,%s,%s)", user_details)
     conn.commit()
+
+email = ("example@example.com",)
+user = check_user_exists(email)
+print(user)
