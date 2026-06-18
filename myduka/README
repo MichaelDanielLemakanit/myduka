@@ -93,7 +93,9 @@ self - refers to the object being created
 Behaviour - what can a class do? -> defined by functions(methods)
 
 TASK 1.Create a class called BankAccount with the attributes: - account number , balance , owner name , date opened
+
 2.Add some behaviour to the above class using the methods: - deposit() - withdraw() - check_balance() -display_info() -close_account()
+
 3.Create two BankAccount objects that can deposit , withdraw , check balance display info and close account
 
 def close_account(self,account): del account print(f'account {account} was successfuly deleted')
@@ -121,24 +123,6 @@ framework - a prebuilt structure of code and tools meant to help developers buil
 Examples 1.Python -> Flask, FastAPI , Django 2.Java -> Spring 3.C# -> .NET 4.JavaScript -> React, Angular, Vue , Svelte 5.Golang -> Chi, Gin 6.NodeJS -> Express 7.Ruby -> Ruby on Rails 8.PHP -> Laravel
 
 FLASK -> A Python framework used to build web applications
-
-
-# 1. Create a fresh virtual environment named 'venv'
-python -m venv venv
-
-# 2. Activate the environment (On Windows)
-.\venv\Scripts\Activate.ps1
-
-# 3. Install Flask inside this isolated sandbox
-pip install flask
-
-# 4. Start your development server
-flask run
-
-syntax that help not to kiil you server bt to reload 
-set FLASK_DEBUG=1
-
-flask run
 
 Routing in FLASK -> A mechanism that maps / connects URLS to Python functions. It is a system for resource navigation
 
@@ -179,6 +163,7 @@ Note - data from the form is of type string
 p_name:"bread" b_price:55 s_price:60
 
 task =>Post stock and sales data using a form and two routes: /add_sales , /add_stock
+
 making purchases => add products -> name,bp,sp => add stock on existing products => making sales => reduce
 
 bread, 60,65 100 80 20 - remaining stock
@@ -209,8 +194,7 @@ zero => 1000 - 1000
 
 flash notifications authentication
 
-Task Have products and stock forms inside modals 
-Test making sales with checking available stock
+Task Have products and stock forms inside modals Test making sales with checking available stock
 
 Flash messaging -> One time notifications to the user based on some action e.g. action -> adding a product notificatins -> added product successfully
 
@@ -238,18 +222,23 @@ pip install flask_bcrypt
 
 Hashing history
 
-*DATA VISUALIZATION*
--> represent data using visual aids:
--> sales and profit per product
--> sales and profit per day
+id | full_name | email | phone_number | password
+----+-----------+------------------+--------------+-------------------------------------------------------------- 1 | Jane | janedoe@mail.com | 0774981928 | $2b$12$qkfAKQKQvaXYvPMG71b/cOnYvk/p2OPKcPMPcVVuhO.NoAx40vDfG (1 row)
 
-Types of visual tools
--> bar charts, line charts, pie charts, doughnut chart, frequency polygons, histograms, heatmaps, radar charts, polar area charts
+User login 1.User is provided with a form to login with email & password 2.User fills form and submits it to login route 3.Flask extracts login creds using request object 4.Use email to confirm that the user is a registered 5.If user doesnt exist: -> alert them to register instead 6.if user exists: -> confirm that user pasword is correct if password is correct: - user is redirected to login if password is incorrect: -alert user to attempt another password input
 
-*bar charts* -> sales and profit per product
-             -> x axis : product names
-             -> y axis : sales and profit data
-             
-*line charts* -> sales and profit per day
-              -> x axis : dates
-              -> y axis : sales and profit data
+1234
+
+(1, 'Jane', 'janedoe@mail.com', '0774981928', '$2b$12$qkfAKQKQvaXYvPMG71b/cOnYvk/p2OPKcPMPcVVuhO.NoAx40vDfG')
+
+1234 != $2b$12$qkfAKQKQvaXYvPMG71b/cOnYvk/p2OPKcPMPcVVuhO.NoAx40vDfG
+
+hashing is a one way function
+
+session -> data used by the server to remember an authenticated user session data will be stored in a cookie and signed using your secret key session stores data in key value pair format
+
+DATA VISUALIZATION -> represent data using visual aids: -> sales and profit per product -> sales and profit per day
+
+Types of visual tools -> bar charts, line charts, pie charts, doughnut chart, frequency polygons, histograms, heatmaps, radar charts, polar area charts
+
+bar charts -> sales and profit per product -> x axis : product names -> y axis : sales and profit data line charts -> sales and profit per day -> x axis : dates -> y axis : sales and profit data
