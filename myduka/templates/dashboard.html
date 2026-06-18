@@ -1,1 +1,19 @@
 {% extends 'base.html' %}
+{% block title %} Dashboard {% endblock %}
+{% block content %}
+
+<div>
+    <div>
+        <p>This is the dashboard</p>
+    </div>
+    <div>
+        <p>{{ products_name }}</p>
+        <p>{{ prod_profit }}</p>
+        <p>{{ prod_sales }}</p>
+        <p>{{ dates }}</p>
+        <p>{{ days_sales }}</p>
+        <p>{{ days_profit }}</p>
+    </div>
+</div>
+
+{% endblock %}

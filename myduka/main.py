@@ -1,5 +1,5 @@
 from flask import Flask, render_template,request,redirect,url_for, flash, session
-from database import get_products,get_sales,get_stock,insert_products,check_available_stock,insert_sales,check_user_exists,insert_user
+from database import get_products,get_sales,get_stock,insert_products,check_available_stock,insert_sales,check_user_exists,insert_user,sales_per_day, sales_per_product, profit_per_day, profit_per_product
 from flask_bcrypt import Bcrypt
 from functools import wraps
 
@@ -25,7 +25,7 @@ def login_required(f):
 
 #products route
 @app.route("/products")
-@login_required
+# @login_required
 def products():
     products_data = get_products()
     return render_template('products.html',products_data=products_data)
@@ -78,7 +78,7 @@ def make_sale():
 
 #stock route
 @app.route('/stock')
-@login_required
+# @login_required
 def stock():
     stock_data = get_stock()
     products = get_products()
@@ -88,7 +88,32 @@ def stock():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-   return render_template('dashboard.html')
+    product_sales = sales_per_product()
+    product_profit = profit_per_product()
+    
+    daily_sales = sales_per_day()
+    daily_profit = profit_per_day()
+    
+    # 1. Product data for the dashboard charts
+    products_name = [i[0] for i in product_sales]
+    prod_profit = [float(i[1]) for i in product_profit]
+    prod_sales = [float(i[1]) for i in product_sales]
+    # 2. Time-series days data
+    dates = [str(i[0]) for i in daily_sales]        
+    days_sales = [float(i[1]) for i in daily_sales]       
+    days_profit = [float(i[1]) for i in daily_profit]     
+    
+    return render_template(
+        'dashboard.html',
+        products_name=products_name,
+        prod_profit=prod_profit,
+        prod_sales=prod_sales,
+        dates=dates,
+        days_sales=days_sales,
+        days_profit=days_profit
+    )
+
+
 
 
 @app.route('/register', methods=['GET','POST'])
@@ -128,6 +153,7 @@ def login():
             return redirect(url_for('register'))
         else:
             if bcrypt.check_password_hash(registered_user[-1], password):
+                session['email'] = email
                 flash("Login successful", 'success')
                 return redirect(url_for('dashboard'))
             else:
@@ -136,7 +162,12 @@ def login():
 
     return render_template('login.html')
 
-
+@app.route('/logout')
+def logout():
+    session.pop('email', None)
+    flash("You have been logged out", 'success')
+    return redirect(url_for('login'))
 
 #run your application
-app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -238,3 +238,18 @@ pip install flask_bcrypt
 
 Hashing history
 
+*DATA VISUALIZATION*
+-> represent data using visual aids:
+-> sales and profit per product
+-> sales and profit per day
+
+Types of visual tools
+-> bar charts, line charts, pie charts, doughnut chart, frequency polygons, histograms, heatmaps, radar charts, polar area charts
+
+*bar charts* -> sales and profit per product
+             -> x axis : product names
+             -> y axis : sales and profit data
+             
+*line charts* -> sales and profit per day
+              -> x axis : dates
+              -> y axis : sales and profit data
