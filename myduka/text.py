@@ -1,7 +1,9 @@
-from database import get_products
+from database import sales_per_day
 
-product = get_products()
-print(product)
+data = sales_per_day()
+print(data)
 
-for i in product:
-    print(i[1])
+# [('samsung phone', Decimal('96600000.00')), ('bread', Decimal('53800.00'))]
+
+names = [i[0] for i in data]
+print(names)
